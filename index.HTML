@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MWM WHR | Saikat Paul</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f1f5f9;
+            background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+            background-size: 35px 35px;
+        }
+        .input-group { @apply mb-4; }
+        .label { @apply block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1; }
+        .input { @apply w-full p-2 border border-slate-300 rounded bg-white/90 focus:ring-2 focus:ring-blue-600 outline-none font-mono text-sm transition-all; }
+        .card { @apply bg-white/95 backdrop-blur-md p-6 rounded-lg shadow-xl border border-slate-200 hover:border-blue-500 transition-all h-full; }
+        .engine-overlay { background: linear-gradient(to right, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.5)); }
+        .kpi-box { @apply p-4 rounded bg-slate-900 text-white shadow-inner border-l-4; }
+    </style>
+</head>
+<body class="text-slate-900 font-sans p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="mb-8 rounded-xl overflow-hidden shadow-2xl relative h-64 flex items-center">
+            <img src="https://www.mwm.net/wp-content/uploads/2020/03/mwm-tcg-3016-gas-engine-genset.jpg" alt="MWM Gas Engine" class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 engine-overlay px-10 flex flex-col justify-center border-l-8 border-blue-600">
+                <h1 class="text-4xl font-black text-white tracking-tighter uppercase italic">MWM <span class="text-blue-500">H.W.R. System</span></h1>
+                <p class="text-slate-400 font-mono text-sm tracking-[0.2em] mt-2 uppercase">Thermal Recovery & Financial Life-Cycle Analysis</p>
+                <div class="mt-4">
+                    <span class="bg-blue-600 text-white px-4 py-1 rounded-sm text-[10px] font-bold tracking-[0.2em] italic">ENGINEERED BY SAIKAT PAUL</span>
+                </div>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+            <div class="lg:col-span-4 space-y-6">
+                <div class="card border-t-4 border-blue-600">
+                    <h2 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span> Primary Jacket Circuit
+                    </h2>
+                    <div class="input-group">
+                        <label class="label">Engine HT Flow (m³/hr)</label>
+                        <input type="number" id="htFlow" class="input" value="65" oninput="calculate()">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label class="label">HT Outlet (Hot) °C</label>
+                            <input type="number" id="htOut" class="input" value="95" oninput="calculate()">
+                        </div>
+                        <div class="input-group">
+                            <label class="label">HT Inlet (Ret) °C</label>
+                            <input type="number" id="htIn" class="input" value="80" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card border-t-4 border-emerald-500">
+                    <h2 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-6">Capex & Opex Parameters</h2>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="input-group">
+                            <label class="label">Equip. Cost ($)</label>
+                            <input type="number" id="equipCost" class="input" value="120000" oninput="calculate()">
+                        </div>
+                        <div class="input-group">
+                            <label class="label">Install. Cost ($)</label>
+                            <input type="number" id="installCost" class="input" value="35000" oninput="calculate()">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+                        <div class="input-group">
+                            <label class="label">Elec. ($/kWh)</label>
+                            <input type="number" id="elecPrice" class="input" value="0.12" oninput="calculate()">
+                        </div>
+                        <div class="input-group">
+                            <label class="label">Pump Power (kW)</label>
+                            <input type="number" id="pumpKW" class="input" value="7.5" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-6">
+                
+                <div class="card border-l-8 border-blue-600">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-lg font-black text-slate-800 tracking-tighter uppercase italic">H.W.R. Unit <span class="text-blue-600 font-normal opacity-50 text-sm italic">Hot Water Recovery Output</span></h2>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-[10px] font-bold">SECONDARY CIRCUIT</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-4">
+                            <div class="input-group">
+                                <label class="label text-blue-600">Sec. Inlet Temp (°C)</label>
+                                <input type="number" id="secIn" class="input border-blue-200" value="30" oninput="calculate()">
+                            </div>
+                            <div class="input-group">
+                                <label class="label text-blue-600">Sec. Target Temp (°C)</label>
+                                <input type="number" id="secOut" class="input border-blue-200" value="80" oninput="calculate()">
+                            </div>
+                        </div>
+
+                        <div class="kpi-box border-blue-500">
+                            <p class="text-[10px] font-black uppercase tracking-widest text-blue-400 mb-1">Extraction Flow Potential</p>
+                            <h3 class="text-5xl font-black text-white"><span id="resSecFlow">0</span> <small class="text-xs font-normal opacity-40 uppercase">m³/hr</small></h3>
+                            <p class="text-[9px] font-mono text-slate-500 mt-2 italic">Based on 95% HEX Thermal Efficiency</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="kpi-box border-emerald-500">
+                        <p class="text-[9px] text-emerald-400 font-bold uppercase tracking-widest mb-1">Total Thermal Power</p>
+                        <h3 class="text-3xl font-black"><span id="resTotalKW">0</span> <small class="text-xs opacity-50">kW</small></h3>
+                    </div>
+                    <div class="kpi-box border-slate-500">
+                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-1">Net Annual Savings</p>
+                        <h3 class="text-3xl font-black">$<span id="resNetSavings">0</span></h3>
+                    </div>
+                    <div class="bg-blue-600 p-4 rounded shadow-xl flex flex-col justify-center">
+                        <p class="text-[9px] text-blue-100 font-bold uppercase tracking-widest mb-1">Project Payback</p>
+                        <h3 class="text-3xl font-black text-white"><span id="resPayback">0</span> <small class="text-xs font-normal opacity-80 uppercase">Years</small></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="mt-12 py-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center text-slate-400">
+            <div class="flex items-center gap-3">
+                <div class="bg-slate-900 text-blue-500 w-12 h-12 rounded-sm flex items-center justify-center font-black italic shadow-lg">SP</div>
+                <div>
+                    <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Engineering Analytics</p>
+                    <p class="text-base font-black text-slate-900 tracking-tight uppercase">Made by Saikat Paul</p>
+                </div>
+            </div>
+            <div class="mt-6 md:mt-0 text-[10px] font-mono text-right space-y-1">
+                <p>MWM ENGINE SERIES WHR ANALYZER</p>
+                <p>LHV: 45MJ/kg | BOILER EFF: 85% | HEX EFF: 95%</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function calculate() {
+            const Cp = 4.187;
+            const flow = parseFloat(document.getElementById('htFlow').value) || 0;
+            const hOut = parseFloat(document.getElementById('htOut').value) || 0;
+            const hIn = parseFloat(document.getElementById('htIn').value) || 0;
+            const sOut = parseFloat(document.getElementById('secOut').value) || 0;
+            const sIn = parseFloat(document.getElementById('secIn').value) || 0;
+            
+            const equipCost = parseFloat(document.getElementById('equipCost').value) || 0;
+            const installCost = parseFloat(document.getElementById('installCost').value) || 0;
+            const totalCapex = equipCost + installCost;
+            
+            const pumpKW = parseFloat(document.getElementById('pumpKW').value) || 0;
+            const elecPrice = parseFloat(document.getElementById('elecPrice').value) || 0;
+            const hours = 8000; // Fixed for industrial standard
+
+            // 1. Thermal Power
+            const q100 = (flow * 1000 * Cp * (hOut - hIn)) / 3600;
+            
+            // 2. Secondary HWR Flow Calculation
+            const deltaT_sec = sOut - sIn;
+            let secFlow = 0;
+            if (deltaT_sec > 0) {
+                // Flow_sec = (Q * HEX_Eff * 3600) / (density * Cp * deltaT)
+                secFlow = (q100 * 0.95 * 3600) / (1000 * Cp * deltaT_sec);
+            }
+
+            // 3. Financials
+            const fuelSavedKgHr = (q100 * 3.6) / (45 * 0.85); // Displacement logic
+            const grossAnnSavings = fuelSavedKgHr * 0.95 * hours; // Assuming $0.95/kg fuel
+            const annualElecCost = pumpKW * elecPrice * hours;
+            const annualMaint = totalCapex * 0.02; // 2% Maint allowance
+            
+            const netAnnSavings = grossAnnSavings - annualElecCost - annualMaint;
+            const payback = netAnnSavings > 0 ? (totalCapex / netAnnSavings) : 0;
+
+            // UI Update
+            document.getElementById('resTotalKW').innerText = Math.round(q100).toLocaleString();
+            document.getElementById('resSecFlow').innerText = secFlow.toFixed(2);
+            document.getElementById('resNetSavings').innerText = Math.round(netAnnSavings).toLocaleString();
+            document.getElementById('resPayback').innerText = payback.toFixed(2);
+        }
+
+        window.onload = calculate;
+    </script>
+</body>
+</html>
